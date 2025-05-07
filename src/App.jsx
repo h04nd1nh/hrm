@@ -1,26 +1,57 @@
-import { useState } from 'react'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import { AuthProvider } from './context/AuthContext'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import routes from './routes.jsx'
+import { AuthProvider, useAuth } from './context/AuthContext'
 import './App.css'
 
-function App() {
-  // Demo state để chuyển đổi giữa các trang (sẽ thay bằng router sau)
-  const [page, setPage] = useState('login') // 'login' hoặc 'dashboard'
-
-  // Function demo để chuyển trang
-  const navigateTo = (targetPage) => {
-    setPage(targetPage)
+// Protected route component
+const ProtectedRoute = ({ children }) => {
+  const { isAuthenticated } = useAuth()
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />
   }
+  
+  return children
+}
 
+function App() {
   return (
     <AuthProvider>
-      {page === 'login' ? (
-        <Login onLoginSuccess={() => navigateTo('dashboard')} />
-      ) : (
-        <Dashboard onLogout={() => navigateTo('login')} />
-      )}
+      <AppRoutes />
     </AuthProvider>
+  )
+}
+
+// Separate component for routes so useAuth can be used inside AuthProvider
+function AppRoutes() {
+  return (
+    <Routes>
+      {routes.map((route) => {
+        // For protected routes, wrap with ProtectedRoute
+        if (route.protected) {
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                <ProtectedRoute>
+                  {route.element}
+                </ProtectedRoute>
+              }
+            />
+          )
+        }
+        
+        // Regular routes
+        return (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={route.element}
+          />
+        )
+      })}
+    </Routes>
   )
 }
 

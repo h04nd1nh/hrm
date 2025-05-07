@@ -1,10 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 /**
  * Layout chính cho ứng dụng
  */
 const MainLayout = ({ children }) => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -17,11 +27,21 @@ const MainLayout = ({ children }) => {
             
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-gray-900 hover:text-blue-600">Dashboard</a>
-              <a href="#" className="text-gray-500 hover:text-blue-600">Employees</a>
-              <a href="#" className="text-gray-500 hover:text-blue-600">Departments</a>
-              <a href="#" className="text-gray-500 hover:text-blue-600">Settings</a>
+              <Link to="/dashboard" className="text-gray-900 hover:text-blue-600">Dashboard</Link>
+              <Link to="/employees" className="text-gray-500 hover:text-blue-600">Employees</Link>
+              <Link to="/departments" className="text-gray-500 hover:text-blue-600">Departments</Link>
+              <Link to="/settings" className="text-gray-500 hover:text-blue-600">Settings</Link>
             </nav>
+
+            {/* User menu */}
+            <div className="ml-4 flex items-center md:ml-6">
+              <button
+                onClick={handleLogout}
+                className="ml-3 px-3 py-1 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
+              >
+                Logout
+              </button>
+            </div>
           </div>
         </div>
       </header>

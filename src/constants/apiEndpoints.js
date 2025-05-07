@@ -1,8 +1,9 @@
 /**
  * Các API endpoint của ứng dụng
  */
+import env from '../config/env';
 
-const API_VERSION = 'v1';
+const API_VERSION = env.API_VERSION;
 const BASE_URL = `/api/${API_VERSION}`;
 
 // Các endpoint xác thực

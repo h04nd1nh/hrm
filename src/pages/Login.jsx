@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Input, Button } from '../components/ui';
 import AuthLayout from '../layouts/AuthLayout';
 import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   
   const [formErrors, setFormErrors] = useState({});
-  const { login, isLoading, error } = useAuth();
+  const { login, isLoading, error, isAuthenticated } = useAuth();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,9 +65,8 @@ const Login = () => {
     
     try {
       await login(formData);
-      // Redirect sẽ được xử lý bởi AuthProvider
+      // Navigation will be handled by the useEffect hook
     } catch (err) {
-      // Lỗi đã được xử lý trong AuthProvider
       console.error('Login failed:', err);
     }
   };

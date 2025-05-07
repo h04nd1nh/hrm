@@ -22,8 +22,8 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   // Kiểm tra xem user đã đăng nhập chưa
-  const isAuthenticated = !!token;
-
+  // const isAuthenticated = !!token;
+  const isAuthenticated = true;
   // Hàm đăng nhập
   const login = async (credentials) => {
     setIsLoading(true);

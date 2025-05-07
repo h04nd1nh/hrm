@@ -1,9 +1,10 @@
 /**
  * Tiện ích xử lý localStorage và sessionStorage
  */
+import env from '../config/env';
 
 // Prefix cho tất cả các key để tránh xung đột
-const KEY_PREFIX = 'hrm_';
+const KEY_PREFIX = env.STORAGE_KEY_PREFIX;
 
 /**
  * Lưu dữ liệu vào localStorage

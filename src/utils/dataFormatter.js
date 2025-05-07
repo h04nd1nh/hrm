@@ -1,15 +1,16 @@
 /**
  * Các hàm tiện ích định dạng dữ liệu
  */
+import env from '../config/env';
 
 /**
  * Định dạng số dạng tiền tệ
  * @param {number} amount - Số tiền cần định dạng
- * @param {string} currency - Mã tiền tệ (mặc định: VND)
- * @param {string} locale - Locale cho định dạng (mặc định: vi-VN)
+ * @param {string} currency - Mã tiền tệ (mặc định từ biến môi trường)
+ * @param {string} locale - Locale cho định dạng (mặc định từ biến môi trường)
  * @returns {string} - Chuỗi đã định dạng
  */
-export const formatCurrency = (amount, currency = 'VND', locale = 'vi-VN') => {
+export const formatCurrency = (amount, currency = env.DEFAULT_CURRENCY, locale = env.DEFAULT_LOCALE) => {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: currency,
@@ -20,10 +21,10 @@ export const formatCurrency = (amount, currency = 'VND', locale = 'vi-VN') => {
  * Định dạng ngày tháng
  * @param {Date|string|number} date - Đối tượng Date, chuỗi ISO hoặc timestamp
  * @param {string} format - 'short', 'medium', 'long', 'full' (mặc định: 'medium')
- * @param {string} locale - Locale cho định dạng (mặc định: vi-VN)
+ * @param {string} locale - Locale cho định dạng (mặc định từ biến môi trường)
  * @returns {string} - Chuỗi ngày đã định dạng
  */
-export const formatDate = (date, format = 'medium', locale = 'vi-VN') => {
+export const formatDate = (date, format = 'medium', locale = env.DEFAULT_LOCALE) => {
   if (!date) return '';
   
   // Chuyển đổi đầu vào thành đối tượng Date
