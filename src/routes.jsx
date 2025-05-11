@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { Login, Dashboard, NotFound } from './pages';
+import { Login, Dashboard, NotFound, Calendar, Employee, Vacation, Messenger } from './pages';
 
 // Routes configuration
 const routes = [
@@ -14,6 +14,26 @@ const routes = [
   {
     path: '/dashboard',
     element: <Dashboard />,
+    protected: true,
+  },
+  {
+    path: '/calendar',
+    element: <Calendar />,
+    protected: true,
+  },
+  {
+    path: '/employee',
+    element: <Employee />,
+    protected: true,
+  },
+  {
+    path: '/vacation',
+    element: <Vacation />,
+    protected: true,
+  },
+  {
+    path: '/messenger',
+    element: <Messenger />,
     protected: true,
   },
   {
