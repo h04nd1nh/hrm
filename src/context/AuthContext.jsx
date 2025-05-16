@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { apiService } from '../services/api';
+import { authRepository } from '../repositories/authRepository';
+import { showToast } from '../utils/toast';
 
 // Tạo context
 const AuthContext = createContext(null);
@@ -16,30 +17,64 @@ export const useAuth = () => {
 
 // AuthProvider component
 export const AuthProvider = ({ children }) => {
-  const [user, setUser, removeUser] = useLocalStorage('user', null);
   const [token, setToken, removeToken] = useLocalStorage('token', null);
+  const [user, setUser] = useLocalStorage('user', null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // Kiểm tra xem user đã đăng nhập chưa
-  // const isAuthenticated = !!token;
-  const isAuthenticated = true;
+  const isAuthenticated = !!token;
+  
   // Hàm đăng nhập
   const login = async (credentials) => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // Gọi API đăng nhập - sử dụng endpoint thực tế của bạn
-      const response = await apiService.post('/auth/login', credentials);
+      // Sử dụng authRepository thay vì gọi trực tiếp API
+      const response = await authRepository.signIn(credentials);
       
-      // Lưu token và thông tin user
-      setToken(response.token);
-      setUser(response.user);
+      console.log('Login response:', response); // Debug để xem cấu trúc response
       
-      return response;
+      // Xử lý và lưu token
+      if (response.accessToken) {
+        // Lưu token vào localStorage
+        setToken(response.accessToken);
+        
+        // Lưu thông tin user nếu có
+        const userData = {
+          id: response.id,
+          name: response.name,
+          email: response.email,
+          role: response.role,
+          // Các thông tin khác nếu có
+        };
+        setUser(userData);
+        
+        showToast.success('Đăng nhập thành công!');
+        return response;
+      } else {
+        console.error('Unexpected response structure:', response);
+        throw new Error('Không tìm thấy access token trong response');
+      }
     } catch (err) {
-      setError(err.message || 'Đăng nhập thất bại');
+      // Lấy message từ response error
+      let errorMessage = 'Đăng nhập thất bại';
+      
+      // Kiểm tra nếu có error data từ API
+      if (err.data) {
+        if (typeof err.data === 'object' && err.data.message) {
+          errorMessage = err.data.message;
+        } else if (typeof err.data === 'string') {
+          errorMessage = err.data;
+        }
+      } else if (err.message) {
+        errorMessage = err.message;
+      }
+      
+      console.log('Login error:', err);
+      showToast.error(errorMessage);
+      setError(errorMessage);
       throw err;
     } finally {
       setIsLoading(false);
@@ -47,49 +82,26 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Hàm đăng xuất
-  const logout = () => {
+  const logout = async () => {
     removeToken();
-    removeUser();
-    // Có thể thêm các bước xử lý khác khi đăng xuất
+    setUser(null);
   };
 
-  // Kiểm tra token và lấy thông tin user khi refresh trang
-  useEffect(() => {
-    const verifyToken = async () => {
-      if (!token) return;
-      
-      try {
-        setIsLoading(true);
-        // Gọi API để xác thực token - điều chỉnh theo endpoint thực tế của bạn
-        const response = await apiService.get('/auth/me', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        
-        // Cập nhật thông tin user nếu cần
-        setUser(response.user);
-      } catch (err) {
-        console.error('Token invalid:', err);
-        // Nếu token không hợp lệ, đăng xuất user
-        logout();
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    verifyToken();
-  }, [token]);
+  // Hàm lấy role của user
+  const getUserRole = () => {
+    return user?.role;
+  };
 
   // Giá trị được provide cho context
   const value = {
-    user,
     token,
+    user,
     isLoading,
     error,
     isAuthenticated,
     login,
     logout,
+    getUserRole,
   };
 
   return (
