@@ -22,10 +22,10 @@ const MainLayout = ({ children }) => {
       <Sidebar />
 
       {/* Main content */}
-      <div className="flex flex-col flex-1 overflow-hidden w-full">
+      <div className="flex flex-col flex-1 overflow-hidden w-full scrollbar-hide">
         {/* Page content */}
-        <main className="flex-1 overflow-auto p-6 w-full">
-          <div className="w-full h-full flex-1">
+        <main className="flex-1 overflow-auto p-6 w-full scrollbar-hide">
+          <div className="w-full h-full flex-1 scrollbar-hide">
             {children}
           </div>
         </main>

@@ -2,6 +2,7 @@
 
 @import "tailwindcss";
 
+
 :root {
   font-family: 'Nunito Sans', sans-serif;
   line-height: 1.5;
@@ -50,17 +51,16 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
+/* button:hover {
   border-color: #646cff;
-}
-button:focus,
+} */
+/* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
+} */
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -70,7 +70,23 @@ button:focus-visible {
   a:hover {
     color: #747bff;
   }
-  button {
-    background-color: #f9f9f9;
-  }
+  
 }
+
+.scrollbar-hide,
+html,
+body {
+  /* Firefox */
+  scrollbar-width: none;
+  /* Internet Explorer và Edge */
+  -ms-overflow-style: none;
+}
+
+/* Webkit browsers (Chrome, Safari) */
+.scrollbar-hide::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+} 

@@ -1,0 +1,18 @@
+/* Ẩn thanh cuộn cho tất cả các trình duyệt */
+.scrollbar-hide,
+html,
+body {
+  /* Firefox */
+  scrollbar-width: none;
+  /* Internet Explorer và Edge */
+  -ms-overflow-style: none;
+}
+
+/* Webkit browsers (Chrome, Safari) */
+.scrollbar-hide::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+} 

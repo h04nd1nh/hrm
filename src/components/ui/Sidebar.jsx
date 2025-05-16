@@ -1,5 +1,7 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { Button } from '../ui';
 import dashboardIcon from '../../assets/dashboard.svg';
 import dashboardActiveIcon from '../../assets/dashboard_active.svg';
 import calendarIcon from '../../assets/calendar.svg';
@@ -15,9 +17,20 @@ import logoutIcon from '../../assets/logout.svg';
 
 const Sidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const isActive = (path) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
   };
 
   return (
@@ -125,17 +138,14 @@ const Sidebar = () => {
 
         {/* User and logout */}
         <div className="flex flex-col items-start mb-[30px]">
-          <Link to="/logout" className="flex flex-row items-stretch justify-between w-full">
-            <div className="flex flex-row items-center justify-start p-2 rounded-lg gap-[16px] w-[175px] text-gray-500 hover:text-gray-700 font-semibold text-base transition-all duration-300">
-              <img
-                src={logoutIcon}
-                alt="Logout"
-                className="w-6 h-6"
-              />
-              <span className="text-[#7D8592]">Logout</span>
-            </div>
-            <div className="w-1 rounded-[2px] ml-[8px] bg-white transition-all duration-300"></div>
-          </Link>
+          <Button 
+            variant="text"
+            onClick={handleLogout}
+            className="w-full flex items-center justify-start gap-4 p-2 text-[#7D8592] font-semibold rounded-lg"
+          >
+            <img src={logoutIcon} alt="Logout" className="w-6 h-6" />
+            <span>Logout</span>
+          </Button>
         </div>
       </div>
     </div>

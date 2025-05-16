@@ -6,22 +6,19 @@ import PropTypes from 'prop-types';
  */
 const AuthLayout = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="text-center text-3xl font-extrabold text-gray-900">HRM System</h2>
-      </div>
+    <div className="bg-[#F4F9FD] flex flex-row h-screen w-screen justify-items-start">
+    
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+    {/* Main content */}
+    <div className="flex flex-col flex-1 overflow-hidden w-full">
+      {/* Page content */}
+      <main className="flex-1 overflow-auto w-full">
+        <div className="w-full h-full flex-1">
           {children}
         </div>
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
-            &copy; 2023 HRM System. All rights reserved.
-          </p>
-        </div>
-      </div>
+      </main>
     </div>
+  </div>
   );
 };
 

@@ -1,4 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import routes from './routes.jsx'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import './App.css'
@@ -18,6 +20,18 @@ function App() {
   return (
     <AuthProvider>
       <AppRoutes />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </AuthProvider>
   )
 }

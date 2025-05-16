@@ -29,6 +29,7 @@ const Button = ({
     light: 'bg-white hover:bg-gray-100 text-gray-800 border border-gray-300',
     dark: 'bg-gray-800 hover:bg-gray-900 text-white',
     link: 'bg-transparent text-blue-600 hover:underline p-0',
+    text: 'bg-white hover:bg-gray-50 text-gray-700 border-0',
   };
 
   // Các class dựa trên size
@@ -100,6 +101,7 @@ Button.propTypes = {
     'light',
     'dark',
     'link',
+    'text',
   ]),
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   fullWidth: PropTypes.bool,

@@ -16,7 +16,6 @@ const Header = ({ title }) => {
                 </div>
             </div>
         </div>
-        
     </div>
   );
 };
