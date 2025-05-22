@@ -12,7 +12,6 @@ const API_BASE_URL = env.API_BASE_URL;
 const getAuthToken = () => {
   // 1. Ưu tiên lấy từ localStorage sử dụng hàm getLocalStorage có xử lý prefix
   const token = getLocalStorage('token');
-  console.log('[DEBUG] Token from localStorage:', token);
   
   if (token) {
     return token;
@@ -28,7 +27,6 @@ const getAuthToken = () => {
   };
   
   const cookieToken = getCookie('auth_token');
-  console.log('[DEBUG] Token from cookie:', cookieToken);
   return cookieToken;
 };
 
@@ -40,7 +38,6 @@ const getAuthToken = () => {
 const requestInterceptor = (config) => {
   // Sử dụng token từ tham số nếu được cung cấp, ngược lại lấy từ các nguồn khác
   const token = config.authToken || getAuthToken();
-  console.log('[DEBUG] Token used for request:', token);
   
   if (token) {
     // Thêm token vào header nếu có token
@@ -48,7 +45,6 @@ const requestInterceptor = (config) => {
       ...config.headers,
       'Authorization': `Bearer ${token}`,
     };
-    console.log('[DEBUG] Authorization header set:', `Bearer ${token}`);
   } else {
     console.log('[DEBUG] No token available, request will be sent without Authorization header');
   }

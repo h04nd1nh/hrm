@@ -37,6 +37,19 @@ class EventRepository extends BaseRepository {
     }
   }
 
+   /**
+   * Lấy sự kiện gần nhất
+   * @returns {Promise} - Promise chứa sự kiện gần nhất
+   */
+   async getNearestEvent() {
+    try {
+      const response = await apiService.get(this.endpoints.GET_NEAREST_EVENT);
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /**
    * Lấy danh sách sự kiện
    * @param {number} page - Số trang (mặc định là 1)
