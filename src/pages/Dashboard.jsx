@@ -159,8 +159,8 @@ const Dashboard = () => {
                       className="w-20 h-20 rounded-full object-cover ring-2 ring-offset-2 ring-blue-400"
                     />
                   </div>
-                  <h3 className="text-md font-semibold text-gray-800">{user.name || 'N/A'}</h3>
-                  <p className="text-xs text-gray-500 mb-2">{user.title || 'N/A'}</p>
+                  <h3 className="text-xs font-semibold text-gray-800">{user.name || 'N/A'}</h3>
+                  <p className="text-xs text-gray-500 mb-2">{user.position.position_name || 'N/A'}</p>
                   {user.level && (
                      <span className={`text-xs px-3 py-0.5 rounded-md border ${getLevelTagClass(user.level)}`}>
                        {user.level.level_name}
