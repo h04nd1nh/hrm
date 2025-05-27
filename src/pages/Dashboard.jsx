@@ -126,11 +126,11 @@ const Dashboard = () => {
   // Function to get styling for user level tags
   const getLevelTagClass = (level) => {
     switch (level.level_name?.toLowerCase()) {
-      case 'senior':
+      case 'Senior':
         return 'border-sky-500 text-sky-700 bg-sky-100';
-      case 'middle':
+      case 'Middle':
         return 'border-green-500 text-green-700 bg-green-100';
-      case 'junior':
+      case 'Fresher':  
         return 'border-yellow-500 text-yellow-700 bg-yellow-100';
       default:
         return 'border-gray-400 text-gray-600 bg-gray-100';
