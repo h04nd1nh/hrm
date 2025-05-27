@@ -14,6 +14,9 @@ import messageIcon from '../../assets/message.svg';
 import messageActiveIcon from '../../assets/message_active.svg';
 import logoIcon from '../../assets/logo.svg';
 import logoutIcon from '../../assets/logout.svg';
+import configIcon from '../../assets/config.svg';
+import configActiveIcon from '../../assets/config_active.svg';
+import AdminOnly from '../auth/AdminOnly';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -117,7 +120,7 @@ const Sidebar = () => {
             </Link>
 
             {/* Messenger */}
-            <Link to="/messenger" className="flex flex-row items-stretch justify-between">
+            {/* <Link to="/messenger" className="flex flex-row items-stretch justify-between">
               <div className={`flex flex-row items-center justify-start p-2 rounded-lg gap-[16px] w-[175px] transition-all duration-300 ${isActive('/messenger')
                 ? 'text-blue-600 bg-blue-50'
                 : 'text-gray-500 hover:bg-gray-100 font-semibold text-base'
@@ -132,7 +135,28 @@ const Sidebar = () => {
                 </span>
               </div>
               <div className={`w-1 rounded-[2px] ml-[8px] transition-all duration-300 ${isActive('/messenger') ? 'bg-[#3F8CFF]' : 'bg-white'}`}></div>
-            </Link>
+            </Link> */}
+
+            {/* Config */}
+            <AdminOnly children={
+             <Link to="/config" className="flex flex-row items-stretch justify-between">
+             <div className={`flex flex-row items-center justify-start p-2 rounded-lg gap-[16px] w-[175px] transition-all duration-300 ${isActive('/config')
+               ? 'text-blue-600 bg-blue-50'
+               : 'text-gray-500 hover:bg-gray-100 font-semibold text-base'
+             }`}>
+               <img
+                 src={isActive('/config') ? configActiveIcon : configIcon}
+                 alt="Config"
+                 className="w-6 h-6"
+               />
+               <span className={isActive('/config') ? 'text-[#3F8CFF] font-bold' : 'text-[#7D8592] font-semibold'}>
+                 Config
+               </span>
+             </div>
+             <div className={`w-1 rounded-[2px] ml-[8px] transition-all duration-300 ${isActive('/config') ? 'bg-[#3F8CFF]' : 'bg-white'}`}></div>
+           </Link> 
+            }/>
+
           </nav>
         </div>
 

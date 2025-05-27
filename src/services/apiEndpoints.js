@@ -24,6 +24,7 @@ export const UPLOAD_ENDPOINTS = {
 export const USER_ENDPOINTS = {
     GET_USER_ACTIVE: '/user-active',
     GET_USER_INFORMATION: '/user-information',
+    GET_ALL_USER: '/user',
 }
 
 export const ATTENDANCE_ENDPOINTS = {
@@ -33,5 +34,17 @@ export const ATTENDANCE_ENDPOINTS = {
     GET_ATTENDANCE_TODAY_STATUS: '/attendance/get_today_attendance_status',
     GET_ATTENDANCE_BY_ID: (id) => `/attendance/get_attendance/${id}`,
 }
+
+export const CONFIG_ENDPOINTS = {
+    VIEW_ALL_LEVEL: '/level',
+    VIEW_ALL_POSITION: '/position',
+    ADD_LEVEL: '/level',
+    ADD_POSITION: '/position',
+    UPDATE_LEVEL: (id) => `/level/${id}`,
+    UPDATE_POSITION: (id) => `/position/${id}`,
+    DELETE_LEVEL: (id) => `/level/${id}`,
+    DELETE_POSITION: (id) => `/position/${id}`,
+}
+
 
 // Có thể thêm các endpoint khác tùy vào yêu cầu của dự án 

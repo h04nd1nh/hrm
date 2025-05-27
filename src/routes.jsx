@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { Login, Dashboard, NotFound, Calendar, Employee, Vacation, Messenger } from './pages';
+import { Login, Dashboard, NotFound, Calendar, Employee, Vacation, Messenger, Config } from './pages';
 
 // Routes configuration
 const routes = [
@@ -34,6 +34,11 @@ const routes = [
   {
     path: '/messenger',
     element: <Messenger />,
+    protected: true,
+  },
+  {
+    path: '/config',
+    element: <Config />,
     protected: true,
   },
   {

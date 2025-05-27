@@ -5,6 +5,7 @@ import Calendar from './Calendar';
 import Employee from './Employee';
 import Vacation from './Vacation';
 import Messenger from './Messenger';
+import Config from './Config';
 
 export {
   Login,
@@ -13,5 +14,6 @@ export {
   Calendar,
   Employee,
   Vacation,
-  Messenger
+  Messenger,
+  Config
 }; 

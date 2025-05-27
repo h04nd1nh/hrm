@@ -30,6 +30,25 @@ class UserRepository {
     }
   }
 
+  /**
+   * Fetches all users.
+   * @returns {Promise} - Promise containing the API response with all users.
+   */
+  async getAllUser() {
+    try {
+      const response = await apiService.get(USER_ENDPOINTS.GET_ALL_USER, {
+        params: {
+          page: 1,
+          limit: 10,
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error('Error fetching all users:', error);
+      throw error;
+    }
+  }
+
   // You can add other user-related methods here in the future, e.g.:
   // async getUserById(id) { ... }
   // async updateUser(id, userData) { ... }
