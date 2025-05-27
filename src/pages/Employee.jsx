@@ -106,7 +106,13 @@ const Employee = () => {
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
-                      Role
+                      Position
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Level
                     </th>
                     <th
                       scope="col"
@@ -158,15 +164,14 @@ const Employee = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <span
-                            className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              user.role === "Admin"
-                                ? "bg-purple-100 text-purple-800"
-                                : "bg-blue-100 text-blue-800"
-                            }`}
-                          >
-                            {user.role || "N/A"}
-                          </span>
+                          <div className="text-sm text-gray-900">
+                            {user.position?.position_name || "N/A"}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-gray-900">
+                            {user.level?.level_name || "N/A"}
+                          </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900">
@@ -189,7 +194,7 @@ const Employee = () => {
                   ) : (
                     <tr>
                       <td
-                        colSpan="5"
+                        colSpan="6"
                         className="px-6 py-4 text-center text-sm text-gray-500"
                       >
                         No employees found

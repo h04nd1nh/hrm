@@ -7,6 +7,8 @@ import Vacation from './Vacation';
 import Messenger from './Messenger';
 import Config from './Config';
 import Profile from './Profile';
+import Request from './Request';
+
 
 export {
   Login,
@@ -17,5 +19,6 @@ export {
   Vacation,
   Messenger,
   Config,
-  Profile
+  Profile,
+  Request
 }; 

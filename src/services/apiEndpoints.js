@@ -50,5 +50,20 @@ export const CONFIG_ENDPOINTS = {
     DELETE_POSITION: (id) => `/position/${id}`,
 }
 
+export const VACATION_ENDPOINT = {
+    GET_ALL_VACATION: '/vacation',
+    CREATE_VACATION: '/vacation',
+    UPDATE_VACATION: (id) => `/vacation/${id}`,
+    DELETE_VACATION: (id) => `/vacation/${id}`,
+    GET_ALL_REQUEST_ADMIN: '/vacation/admin/get-all',
+    APPROVE_REQUEST: (id) => `/vacation/admin/approve/${id}`,
+    REJECT_REQUEST: (id) => `/vacation/admin/reject/${id}`,
+}
+
+export const NOTIFICATION_ENDPOINT = {
+    GET_ALL_NOTIFICATION: '/notification',
+    READ_ALL_NOTIFICATION: '/notification/read-all',
+}
+
 
 // Có thể thêm các endpoint khác tùy vào yêu cầu của dự án 
