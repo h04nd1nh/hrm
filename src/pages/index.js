@@ -6,6 +6,7 @@ import Employee from './Employee';
 import Vacation from './Vacation';
 import Messenger from './Messenger';
 import Config from './Config';
+import Profile from './Profile';
 
 export {
   Login,
@@ -15,5 +16,6 @@ export {
   Employee,
   Vacation,
   Messenger,
-  Config
+  Config,
+  Profile
 }; 

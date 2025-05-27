@@ -125,7 +125,7 @@ const Dashboard = () => {
 
   // Function to get styling for user level tags
   const getLevelTagClass = (level) => {
-    switch (level?.toLowerCase()) {
+    switch (level.level_name?.toLowerCase()) {
       case 'senior':
         return 'border-sky-500 text-sky-700 bg-sky-100';
       case 'middle':
@@ -154,7 +154,7 @@ const Dashboard = () => {
                 <div key={user.id} className="bg-slate-50 hover:bg-slate-100 p-4 rounded-xl text-center shadow-sm transition-all duration-200 flex flex-col items-center">
                   <div className="relative mb-3">
                     <img 
-                      src={user.avatarUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'A')}&background=random&size=128`} 
+                      src={user.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || 'A')}&background=random&size=128`} 
                       alt={user.name}
                       className="w-20 h-20 rounded-full object-cover ring-2 ring-offset-2 ring-blue-400"
                     />
@@ -163,7 +163,7 @@ const Dashboard = () => {
                   <p className="text-xs text-gray-500 mb-2">{user.title || 'N/A'}</p>
                   {user.level && (
                      <span className={`text-xs px-3 py-0.5 rounded-md border ${getLevelTagClass(user.level)}`}>
-                       {user.level}
+                       {user.level.level_name}
                      </span>
                   )}
                 </div>

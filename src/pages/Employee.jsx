@@ -3,6 +3,8 @@ import MainLayout from "../layouts/MainLayout";
 import { Button, Header } from "../components/ui";
 import { userRepository } from "../repositories/userRepository";
 import AdminOnly from "../components/auth/AdminOnly";
+import AddEmployeeModal from "../components/employee/AddEmployeeModal";
+import EditEmployeeModal from "../components/employee/EditEmployeeModal";
 
 const Employee = () => {
   const [users, setUsers] = useState([]);
@@ -10,31 +12,53 @@ const Employee = () => {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const response = await userRepository.getAllUser();
+
+      if (response && response.users) {
+        setUsers(response.users);
+        // If pagination info is available in the response
+        if (response.meta && response.meta.pagination) {
+          setTotalPages(response.meta.pagination.total_pages || 1);
+        }
+      }
+      setError(null);
+    } catch (err) {
+      setError("Error fetching users: " + (err.message || "Unknown error"));
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true);
-        const response = await userRepository.getAllUser();
-
-        if (response && response.users) {
-          setUsers(response.users);
-          // If pagination info is available in the response
-          if (response.meta && response.meta.pagination) {
-            setTotalPages(response.meta.pagination.total_pages || 1);
-          }
-        }
-        setError(null);
-      } catch (err) {
-        setError("Error fetching users: " + (err.message || "Unknown error"));
-        setUsers([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsers();
   }, [currentPage]);
+
+  const handleAddEmployee = () => {
+    setShowAddModal(true);
+  };
+
+  const handleEditEmployee = (employee) => {
+    setSelectedEmployee(employee);
+    setShowEditModal(true);
+  };
+
+  const handleEmployeeAdded = () => {
+    // Refresh the user list after adding a new employee
+    fetchUsers();
+  };
+
+  const handleEmployeeUpdated = () => {
+    // Refresh the user list after updating an employee
+    fetchUsers();
+  };
 
   return (
     <MainLayout>
@@ -43,9 +67,14 @@ const Employee = () => {
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-semibold text-gray-800">Employee List</h2>
-          <AdminOnly
-            children={<Button variant="primary">Add Employee</Button>}
-          />
+          <AdminOnly>
+            <Button 
+              variant="primary"
+              onClick={handleAddEmployee}
+            >
+              Add Employee
+            </Button>
+          </AdminOnly>
         </div>
         {loading ? (
           <div className="flex justify-center items-center py-8">
@@ -85,12 +114,14 @@ const Employee = () => {
                     >
                       Phone
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Actions
-                    </th>
+                    <AdminOnly>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                      >
+                        Actions
+                      </th>
+                    </AdminOnly>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -143,18 +174,15 @@ const Employee = () => {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                          <Button
-                            variant="text"
-                            className="text-indigo-600 hover:text-indigo-900 mr-2"
-                          >
-                            Edit
-                          </Button>
-                          <Button
-                            variant="text"
-                            className="text-red-600 hover:text-red-900"
-                          >
-                            Delete
-                          </Button>
+                          <AdminOnly>
+                            <Button
+                              variant="text"
+                              className="text-indigo-600 hover:text-indigo-900 mr-2"
+                              onClick={() => handleEditEmployee(user)}
+                            >
+                              Edit
+                            </Button>
+                          </AdminOnly>
                         </td>
                       </tr>
                     ))
@@ -210,6 +238,21 @@ const Employee = () => {
           </>
         )}
       </div>
+
+      {/* Add Employee Modal */}
+      <AddEmployeeModal
+        isOpen={showAddModal}
+        onClose={() => setShowAddModal(false)}
+        onSuccess={handleEmployeeAdded}
+      />
+
+      {/* Edit Employee Modal */}
+      <EditEmployeeModal
+        isOpen={showEditModal}
+        onClose={() => setShowEditModal(false)}
+        onSuccess={handleEmployeeUpdated}
+        employee={selectedEmployee}
+      />
     </MainLayout>
   );
 };

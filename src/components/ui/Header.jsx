@@ -5,6 +5,7 @@ import { attendanceRepository } from '../../repositories/attendanceRepository';
 import { userRepository } from '../../repositories/userRepository';
 import { UserOnly } from '../index';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Header = ({ title }) => {
   const [attendanceStatus, setAttendanceStatus] = useState(null);
@@ -13,6 +14,8 @@ const Header = ({ title }) => {
   const [workedTime, setWorkedTime] = useState(0);
   const [userInfo, setUserInfo] = useState(null);
   const [userLoading, setUserLoading] = useState(true);
+  
+  const navigate = useNavigate();
 
   // Function to fetch today's attendance status
   const fetchAttendanceStatus = async () => {
@@ -68,6 +71,21 @@ const Header = ({ title }) => {
       setError('Không thể check out');
       setLoading(false);
     }
+  };
+  
+  // Handle profile click
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+  
+  // Handle logout click
+  const handleLogoutClick = () => {
+    // Implement logout functionality here
+    // Clear local storage, cookies, etc.
+    localStorage.removeItem('token');
+    // Redirect to login page
+    navigate('/auth/signin');
+    toast.success('Đăng xuất thành công');
   };
 
   // Format time as HH:MM:SS
@@ -205,16 +223,44 @@ const Header = ({ title }) => {
                     {renderAttendanceUI()}
                 </UserOnly>
                 <img src={Notification} alt="Notification" className="p-[12px] rounded-[14px] bg-white"/>
-                <div className='flex flex-row items-center justify-between gap-[12px] px-[12px] py-[9px] rounded-[14px] bg-white'>
-                    <img 
-                      src={getUserProfileImage()} 
-                      alt="Avatar" 
-                      className="w-[30px] h-[30px] rounded-full"
-                    />
-                    <p className='text-[16px] font-bold text-[#0A1629]'>
-                      {userLoading ? 'Loading...' : (userInfo ? userInfo.name : 'User')}
-                    </p>
-                    <img src={Right} alt="Right" className="w-[24px] h-[24px]"/>
+                <div className="relative user-profile-container group">
+                  <div 
+                    className='flex flex-row items-center justify-between gap-[12px] px-[12px] py-[9px] rounded-[14px] bg-white cursor-pointer'
+                  >
+                      <img 
+                        src={getUserProfileImage()} 
+                        alt="Avatar" 
+                        className="w-[30px] h-[30px] rounded-full"
+                      />
+                      <p className='text-[16px] font-bold text-[#0A1629]'>
+                        {userLoading ? 'Loading...' : (userInfo ? userInfo.name : 'User')}
+                      </p>
+                      <img 
+                        src={Right} 
+                        alt="Right" 
+                        className="w-[24px] h-[24px] transition-transform duration-200 group-hover:rotate-90"
+                      />
+                  </div>
+                  
+                  {/* Dropdown Menu */}
+                  <div className="absolute right-0 mt-2 w-48 rounded-md shadow-xl bg-white opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                    <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                      <button
+                        onClick={handleProfileClick}
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        role="menuitem"
+                      >
+                        My Profile
+                      </button>
+                      <button
+                        onClick={handleLogoutClick}
+                        className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+                        role="menuitem"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
                 </div>
             </div>
         </div>

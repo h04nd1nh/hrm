@@ -25,6 +25,10 @@ export const USER_ENDPOINTS = {
     GET_USER_ACTIVE: '/user-active',
     GET_USER_INFORMATION: '/user-information',
     GET_ALL_USER: '/user',
+    UPDATE_USER: '/user/update',
+    CREATE_USER: '/user',
+    UPDATE_EMPLOYEE: (id) => `/user/update-admin/${id}`,
+    DELETE_EMPLOYEE: (id) => `/user/${id}`,
 }
 
 export const ATTENDANCE_ENDPOINTS = {

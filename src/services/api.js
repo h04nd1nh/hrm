@@ -145,10 +145,10 @@ const errorInterceptor = (error) => {
 export const fetchApi = async (endpoint, options = {}) => {
   const url = `${API_BASE_URL}${endpoint}`;
   
-  const defaultHeaders = {
-    'Content-Type': 'application/json',
-    // Thêm các header khác nếu cần
-  };
+  // Only set default Content-Type if body is not FormData
+  const defaultHeaders = options.body instanceof FormData 
+    ? {} 
+    : { 'Content-Type': 'application/json' };
 
   let config = {
     ...options,
@@ -160,6 +160,16 @@ export const fetchApi = async (endpoint, options = {}) => {
   
   // Áp dụng request interceptor
   config = requestInterceptor(config);
+
+  // Log the actual request for debugging
+  if (env.NODE_ENV === 'development') {
+    console.log('Actual fetch request:', {
+      url,
+      method: config.method,
+      headers: config.headers,
+      body: config.body instanceof FormData ? 'FormData object' : config.body,
+    });
+  }
 
   try {
     const response = await fetch(url, config);
@@ -198,16 +208,54 @@ export const fetchApi = async (endpoint, options = {}) => {
 // Các phương thức HTTP tiện ích
 export const apiService = {
   get: (endpoint, options = {}) => fetchApi(endpoint, { ...options, method: 'GET' }),
-  post: (endpoint, data, options = {}) => fetchApi(endpoint, { 
-    ...options, 
-    method: 'POST',
-    body: JSON.stringify(data),
-  }),
-  put: (endpoint, data, options = {}) => fetchApi(endpoint, { 
-    ...options, 
-    method: 'PUT',
-    body: JSON.stringify(data),
-  }),
+  post: (endpoint, data, options = {}) => {
+    // Check if data is FormData, if so, don't stringify it and remove content-type (browser will set it)
+    if (data instanceof FormData) {
+      const formDataOptions = { 
+        ...options, 
+        method: 'POST',
+        body: data,
+      };
+      
+      // Remove Content-Type header for FormData to let the browser set it with boundary
+      if (formDataOptions.headers && formDataOptions.headers['Content-Type']) {
+        delete formDataOptions.headers['Content-Type'];
+      }
+      
+      return fetchApi(endpoint, formDataOptions);
+    }
+    
+    // Regular JSON data
+    return fetchApi(endpoint, { 
+      ...options, 
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+  put: (endpoint, data, options = {}) => {
+    // Check if data is FormData, if so, don't stringify it and remove content-type (browser will set it)
+    if (data instanceof FormData) {
+      const formDataOptions = { 
+        ...options, 
+        method: 'PUT',
+        body: data,
+      };
+      
+      // Remove Content-Type header for FormData to let the browser set it with boundary
+      if (formDataOptions.headers && formDataOptions.headers['Content-Type']) {
+        delete formDataOptions.headers['Content-Type'];
+      }
+      
+      return fetchApi(endpoint, formDataOptions);
+    }
+    
+    // Regular JSON data
+    return fetchApi(endpoint, { 
+      ...options, 
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  },
   delete: (endpoint, options = {}) => fetchApi(endpoint, { ...options, method: 'DELETE' }),
 };
 
