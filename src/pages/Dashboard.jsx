@@ -160,7 +160,7 @@ const Dashboard = () => {
                     />
                   </div>
                   <h3 className="text-xs font-semibold text-gray-800">{user.name || 'N/A'}</h3>
-                  <p className="text-xs text-gray-500 mb-2">{user.position.position_name || 'N/A'}</p>
+                  <p className="text-xs text-gray-500 mb-2">{user.position?.position_name || 'N/A'}</p>
                   {user.level && (
                      <span className={`text-xs px-3 py-0.5 rounded-md border ${getLevelTagClass(user.level)}`}>
                        {user.level.level_name}
