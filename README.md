@@ -1,21 +1,21 @@
 # HRM System
 
-Human Resource Management System sử dụng React và Vite.
+Human Resource Management System built with React and Vite.
 
-## Công nghệ sử dụng
+## Technologies Used
 
-- **React 19**: Framework JavaScript cho xây dựng UI
-- **Vite**: Build tool nhanh cho các ứng dụng web hiện đại
-- **React Router v7**: Routing cho ứng dụng React
-- **Tailwind CSS v4**: Framework CSS utility-first
-- **React Toastify**: Hiển thị thông báo trong ứng dụng
+- **React 19**: JavaScript framework for building UI
+- **Vite**: Fast build tool for modern web applications
+- **React Router v7**: Routing for React applications
+- **Tailwind CSS v4**: Utility-first CSS framework
+- **React Toastify**: Notification display for applications
 
-## Cấu trúc thư mục
+## Directory Structure
 
 ```
 src/
-├── assets/         # Hình ảnh, fonts, và static files khác
-├── components/     # Các component tái sử dụng
+├── assets/         # Images, fonts, and other static files
+├── components/     # Reusable components
 │   ├── ui/         # UI components (Button, Input, etc.)
 │   ├── auth/       # Authentication related components
 │   ├── employee/   # Employee management components
@@ -23,11 +23,11 @@ src/
 │   ├── calendar/   # Calendar related components
 │   └── config/     # Configuration components
 ├── config/         # Configuration files
-├── constants/      # Hằng số, Enums
+├── constants/      # Constants, Enums
 ├── context/        # React Context
 ├── hooks/          # Custom React hooks
 ├── layouts/        # Layout components
-├── pages/          # Các trang của ứng dụng
+├── pages/          # Application pages
 ├── repositories/   # Repository pattern for data access
 ├── services/       # API services
 ├── styles/         # Global styles and theme
@@ -35,52 +35,52 @@ src/
 └── utils/          # Utility functions
 ```
 
-## Nguyên tắc Clean Code
+## Clean Code Principles
 
-1. **Cấu trúc dự án có tổ chức**: 
-   - Các file và thư mục được sắp xếp hợp lý theo chức năng.
-   - Mọi thứ đều có vị trí cụ thể và có thể dự đoán được.
+1. **Organized Project Structure**: 
+   - Files and directories are logically arranged by function.
+   - Everything has a specific and predictable location.
 
 2. **Separation of Concerns**:
-   - Components chỉ xử lý UI và sự tương tác người dùng.
-   - Services xử lý gọi API và business logic.
-   - Repositories xử lý truy cập dữ liệu.
-   - Hooks xử lý logic tái sử dụng.
-   - Context quản lý trạng thái global của ứng dụng.
+   - Components only handle UI and user interactions.
+   - Services handle API calls and business logic.
+   - Repositories handle data access.
+   - Hooks handle reusable logic.
+   - Context manages the global state of the application.
 
 3. **Component-Based Architecture**:
-   - Các components nhỏ, độc lập và có thể tái sử dụng.
-   - Các components được thiết kế theo nguyên tắc Single Responsibility.
+   - Small, independent, and reusable components.
+   - Components are designed according to the Single Responsibility principle.
 
 4. **Conventions**:
-   - Tên file PascalCase cho Components (Button.jsx)
-   - Tên file camelCase cho utilites và services (apiService.js)
-   - Tên hàm camelCase và mô tả hành động (getUserData)
-   - Tên biến camelCase và mô tả giá trị (userProfile)
+   - PascalCase for Component file names (Button.jsx)
+   - camelCase for utilities and services (apiService.js)
+   - camelCase for function names describing actions (getUserData)
+   - camelCase for variable names describing values (userProfile)
 
 5. **Documentation**:
-   - Comments và JSDoc cho functions và components.
-   - README.md cung cấp hướng dẫn cài đặt và sử dụng.
+   - Comments and JSDoc for functions and components.
+   - README.md provides installation and usage instructions.
 
-## Cài đặt
+## Installation
 
 ```bash
 # Clone repository
 git clone <repository-url>
 
-# Di chuyển vào thư mục dự án
+# Navigate to project directory
 cd hrm
 
-# Cài đặt dependencies
+# Install dependencies
 npm install
 
-# Chạy development server
+# Run development server
 npm run dev
 ```
 
-## Các scripts
+## Scripts
 
-- `npm run dev`: Chạy development server
+- `npm run dev`: Run development server
 - `npm run build`: Build production version
 - `npm run preview`: Preview production build
-- `npm run lint`: Kiểm tra lỗi với ESLint
+- `npm run lint`: Check for errors with ESLint
