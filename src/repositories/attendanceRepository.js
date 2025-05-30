@@ -80,6 +80,18 @@ class AttendanceRepository {
       throw error;
     }
   }
+
+  async getAllUserAttendance() {
+    try {
+      const response = await apiService.get(ATTENDANCE_ENDPOINTS.GET_ATTENDACE_ALL_USER);
+      return response;
+    } catch (error) {
+      console.error('Error fetching all user attendance:', error);
+      throw error;
+    }
+  }
+  
+
 }
 
 export const attendanceRepository = new AttendanceRepository();

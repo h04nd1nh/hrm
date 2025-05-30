@@ -37,6 +37,7 @@ export const ATTENDANCE_ENDPOINTS = {
     CHECK_OUT: '/attendance/checkout',
     GET_ATTENDANCE_TODAY_STATUS: '/attendance/get_today_attendance_status',
     GET_ATTENDANCE_BY_ID: (id) => `/attendance/get_attendance/${id}`,
+    GET_ATTENDACE_ALL_USER: '/attendance/admin/get_all_user_today',
 }
 
 export const CONFIG_ENDPOINTS = {
