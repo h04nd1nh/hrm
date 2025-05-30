@@ -2,6 +2,14 @@
 
 Human Resource Management System sử dụng React và Vite.
 
+## Công nghệ sử dụng
+
+- **React 19**: Framework JavaScript cho xây dựng UI
+- **Vite**: Build tool nhanh cho các ứng dụng web hiện đại
+- **React Router v7**: Routing cho ứng dụng React
+- **Tailwind CSS v4**: Framework CSS utility-first
+- **React Toastify**: Hiển thị thông báo trong ứng dụng
+
 ## Cấu trúc thư mục
 
 ```
@@ -9,13 +17,20 @@ src/
 ├── assets/         # Hình ảnh, fonts, và static files khác
 ├── components/     # Các component tái sử dụng
 │   ├── ui/         # UI components (Button, Input, etc.)
-│   └── common/     # Common components (Header, Footer, etc.)
-├── context/        # React Context
+│   ├── auth/       # Authentication related components
+│   ├── employee/   # Employee management components
+│   ├── vacation/   # Vacation management components
+│   ├── calendar/   # Calendar related components
+│   └── config/     # Configuration components
+├── config/         # Configuration files
 ├── constants/      # Hằng số, Enums
+├── context/        # React Context
 ├── hooks/          # Custom React hooks
 ├── layouts/        # Layout components
 ├── pages/          # Các trang của ứng dụng
+├── repositories/   # Repository pattern for data access
 ├── services/       # API services
+├── styles/         # Global styles and theme
 ├── types/          # Type definitions
 └── utils/          # Utility functions
 ```
@@ -29,6 +44,7 @@ src/
 2. **Separation of Concerns**:
    - Components chỉ xử lý UI và sự tương tác người dùng.
    - Services xử lý gọi API và business logic.
+   - Repositories xử lý truy cập dữ liệu.
    - Hooks xử lý logic tái sử dụng.
    - Context quản lý trạng thái global của ứng dụng.
 
